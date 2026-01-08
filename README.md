@@ -1,4 +1,4 @@
-<div align="center">
+ <div align="center">
 
 # 🌉 EcoBridge
 
@@ -178,6 +178,61 @@ Use laptop peripherals (microphones, controllers) as inputs for Android.
 1. Start the **Desktop App** first (it initializes the discovery server).
 2. Open the **Mobile App** on your phone (ensure it's on the same Wi-Fi network).
 3. The mobile app should automatically detect the desktop and show "Online".
+
+---
+
+## 🔄 Continuous Integration (CI)
+
+We use **GitHub Actions** to automatically build and test both the desktop and mobile applications on every push to `main` and on pull requests.
+
+### 🚀 How It Works
+
+The CI pipeline runs two parallel jobs:
+
+#### Desktop Build (Windows)
+- **Trigger:** Push to `main`, Pull Requests
+- **Environment:** Windows (windows-latest)
+- **Steps:**
+  1. Checks out the code
+  2. Sets up Node.js (v18+)
+  3. Runs `npm install` to install dependencies
+  4. Runs `npm run build` to build the Electron + Next.js application
+
+#### Mobile Build (Linux)
+- **Trigger:** Push to `main`, Pull Requests
+- **Environment:** Ubuntu (ubuntu-latest)
+- **Steps:**
+  1. Checks out the code
+  2. Sets up Flutter (v3.16 stable channel)
+  3. Runs `flutter pub get` to fetch dependencies
+  4. Runs `flutter analyze` to perform static code analysis
+
+### 📋 Workflow Configuration
+
+The workflow is defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and will:
+- ✅ Run automatically on every push to the `main` branch
+- ✅ Run automatically on every pull request targeting `main`
+- ✅ Fail the build if either job encounters an error
+- ✅ Cache dependencies for faster subsequent builds
+- ✅ Display results in the PR checks section
+
+### 💡 What This Means for Contributors
+
+When you submit a pull request:
+1. The CI workflow will automatically start
+2. Both desktop and mobile builds will be compiled and tested
+3. Static analysis will check your code for issues
+4. The PR will show a ✅ or ❌ status based on results
+5. Your code must pass all checks before merging
+
+**Tip:** You can run these commands locally before pushing:
+```bash
+# For desktop
+cd desktop && npm install && npm run build
+
+# For mobile
+cd mobile && flutter pub get && flutter analyze
+```
 
 ---
 

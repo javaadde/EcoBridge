@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  desktop:
+    name: Build Desktop (Node.js)
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'desktop/package-lock.json'
+    
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./desktop
+    
+    - name: Build desktop app
+      run: npm run build
+      working-directory: ./desktop
+
+  mobile:
+    name: Build Mobile (Flutter)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.x'
+        channel: 'stable'
+    
+    - name: Get Flutter dependencies
+      run: flutter pub get
+      working-directory: ./mobile
+    
+    - name: Run Flutter analyzer
+      run: flutter analyze
+      working-directory: ./mobile
