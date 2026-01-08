@@ -1,0 +1,35 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+*.log
+.DS_Store
+.env
+.env.local
+
+# Mobile
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/build/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/.idea/
+mobile/*.iml
+
+# Desktop
+desktop/node_modules/
+desktop/.next/
+desktop/out/
+desktop/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
