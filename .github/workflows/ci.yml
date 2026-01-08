@@ -33,21 +33,27 @@ jobs:
   mobile:
     name: Build Mobile (Flutter)
     runs-on: ubuntu-latest
-    
+
+    defaults:
+      run:
+        working-directory: ./mobile
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '^3.29.0'
-        channel: 'stable'
-    
-    - name: Get Flutter dependencies
-      run: flutter pub get
-      working-directory: ./mobile
-    
-    - name: Run Flutter analyzer
-      run: flutter analyze
-      working-directory: ./mobile
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: stable
+          cache: true
+
+      - name: Flutter version check
+        run: flutter --version
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run Flutter analyzer
+        run: flutter analyze
